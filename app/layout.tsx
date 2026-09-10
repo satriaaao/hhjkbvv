@@ -1,9 +1,17 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "AIORBITLAB — Build Smarter with AI",
-  description: "AI Agent, aplikasi AI custom, automasi bisnis, dan integrasi sistem untuk bisnis modern.",
+  title: "AIORBITLAB — AI Systems for Modern Business",
+  description: "AI Agent, aplikasi custom, automasi, dashboard, OCR, dan integrasi untuk bisnis modern.",
+  keywords: ["AI Agent", "Business Automation", "Custom Application", "Dashboard", "OCR", "AI Integration", "AIORBITLAB"],
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#090909",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
