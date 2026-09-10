@@ -1,294 +1,92 @@
 <!doctype html>
 <html lang="id">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#07111f" />
-  <meta name="description" content="AIORBITLAB — pembuatan aplikasi AI, AI Agent, automasi bisnis, dan solusi digital custom." />
-  <title>AIORBITLAB — AI untuk Bisnis yang Bergerak Lebih Cepat</title>
-  <style>
-    :root{
-      --bg:#07111f;
-      --bg-soft:#0b1728;
-      --card:rgba(255,255,255,.07);
-      --card-strong:rgba(255,255,255,.11);
-      --text:#f7fbff;
-      --muted:#a8b7ca;
-      --line:rgba(255,255,255,.12);
-      --primary:#53a8ff;
-      --primary-2:#7d6cff;
-      --accent:#67e8c4;
-      --shadow:0 24px 80px rgba(0,0,0,.34);
-      --radius:28px;
-    }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      min-height:100vh;
-      color:var(--text);
-      background:
-        radial-gradient(circle at 15% 5%, rgba(83,168,255,.19), transparent 30%),
-        radial-gradient(circle at 85% 15%, rgba(125,108,255,.18), transparent 32%),
-        linear-gradient(180deg,#07111f 0%,#081421 52%,#07111f 100%);
-      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-      overflow-x:hidden;
-    }
-    body.light{
-      --bg:#f7fbff;
-      --bg-soft:#ffffff;
-      --card:rgba(255,255,255,.82);
-      --card-strong:#ffffff;
-      --text:#0c1a2d;
-      --muted:#617089;
-      --line:rgba(12,26,45,.10);
-      --shadow:0 24px 60px rgba(32,71,114,.12);
-      background:
-        radial-gradient(circle at 10% 10%, rgba(83,168,255,.14), transparent 30%),
-        radial-gradient(circle at 90% 10%, rgba(125,108,255,.12), transparent 28%),
-        linear-gradient(180deg,#f8fbff 0%,#eef6ff 55%,#ffffff 100%);
-    }
-    a{color:inherit;text-decoration:none}
-    button{font:inherit}
-    .container{width:min(1180px,calc(100% - 32px));margin:0 auto}
-    .nav-wrap{position:sticky;top:0;z-index:50;padding:16px 0;background:linear-gradient(180deg,rgba(7,17,31,.86),rgba(7,17,31,.48),transparent);backdrop-filter:blur(14px)}
-    body.light .nav-wrap{background:linear-gradient(180deg,rgba(248,251,255,.92),rgba(248,251,255,.6),transparent)}
-    nav{display:flex;align-items:center;justify-content:space-between;gap:20px;border:1px solid var(--line);background:rgba(9,20,34,.66);backdrop-filter:blur(18px);border-radius:22px;padding:10px 12px 10px 16px;box-shadow:0 12px 40px rgba(0,0,0,.12)}
-    body.light nav{background:rgba(255,255,255,.78)}
-    .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.04em}
-    .brand-mark{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,var(--primary),var(--primary-2));display:grid;place-items:center;box-shadow:0 10px 30px rgba(83,168,255,.28)}
-    .brand-mark:before{content:"";width:14px;height:14px;border:2px solid white;border-radius:50%;box-shadow:8px 0 0 -5px white,-8px 0 0 -5px white}
-    .nav-links{display:flex;align-items:center;gap:24px;color:var(--muted);font-size:14px}
-    .nav-links a:hover{color:var(--text)}
-    .nav-actions{display:flex;gap:10px;align-items:center}
-    .icon-btn,.menu-btn{width:42px;height:42px;border-radius:14px;border:1px solid var(--line);background:var(--card);color:var(--text);display:grid;place-items:center;cursor:pointer}
-    .menu-btn{display:none}
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:46px;padding:0 18px;border-radius:15px;border:1px solid var(--line);font-weight:700;transition:.22s ease;cursor:pointer}
-    .btn:hover{transform:translateY(-2px)}
-    .btn-primary{border:0;background:linear-gradient(135deg,var(--primary),var(--primary-2));color:#fff;box-shadow:0 14px 36px rgba(83,168,255,.26)}
-    .btn-soft{background:var(--card);color:var(--text)}
-    .hero{padding:92px 0 70px;position:relative}
-    .hero-grid{display:grid;grid-template-columns:1.07fr .93fr;gap:46px;align-items:center}
-    .eyebrow{display:inline-flex;align-items:center;gap:9px;padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--muted);font-size:13px;font-weight:700;margin-bottom:22px}
-    .eyebrow i{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 20px var(--accent)}
-    h1{font-size:clamp(48px,7vw,86px);line-height:.98;letter-spacing:-.055em;margin:0 0 22px;max-width:800px}
-    .grad{background:linear-gradient(100deg,#fff 0%,#87c7ff 46%,#a79bff 78%,#74f1cd 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
-    body.light .grad{background:linear-gradient(100deg,#10233d 0%,#1979ce 52%,#6452e5 85%);-webkit-background-clip:text;background-clip:text;color:transparent}
-    .hero p{font-size:18px;line-height:1.75;color:var(--muted);max-width:660px;margin:0 0 30px}
-    .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:34px}
-    .proof{display:flex;flex-wrap:wrap;gap:12px 24px;color:var(--muted);font-size:14px}
-    .proof span{display:flex;align-items:center;gap:8px}.proof b{color:var(--text)}
-    .orbital{min-height:540px;position:relative;display:grid;place-items:center}
-    .visual-card{width:min(100%,500px);aspect-ratio:1/1;border:1px solid var(--line);border-radius:40px;background:linear-gradient(145deg,rgba(255,255,255,.10),rgba(255,255,255,.025));box-shadow:var(--shadow);position:relative;overflow:hidden;backdrop-filter:blur(18px)}
-    .visual-card:before,.visual-card:after{content:"";position:absolute;border-radius:50%;border:1px solid rgba(255,255,255,.16);inset:10%;animation:spin 20s linear infinite}
-    .visual-card:after{inset:22%;animation-direction:reverse;animation-duration:13s}
-    @keyframes spin{to{transform:rotate(360deg)}}
-    .planet{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:148px;height:148px;border-radius:50%;background:radial-gradient(circle at 32% 25%,#d9f0ff 0,#6cb7ff 17%,#625bdf 48%,#1d234b 76%);box-shadow:0 0 70px rgba(89,122,255,.50),inset -18px -20px 30px rgba(0,0,0,.25)}
-    .orbit-dot{position:absolute;width:48px;height:48px;border-radius:17px;background:rgba(10,22,39,.82);border:1px solid var(--line);display:grid;place-items:center;box-shadow:0 14px 36px rgba(0,0,0,.24);font-size:20px}
-    body.light .orbit-dot{background:rgba(255,255,255,.88)}
-    .d1{left:15%;top:23%}.d2{right:12%;top:30%}.d3{left:19%;bottom:15%}.d4{right:18%;bottom:16%}
-    .mini-panel{position:absolute;left:7%;right:7%;bottom:6%;padding:14px 16px;border:1px solid var(--line);border-radius:19px;background:rgba(8,18,31,.72);backdrop-filter:blur(16px);display:flex;justify-content:space-between;gap:16px;align-items:center}
-    body.light .mini-panel{background:rgba(255,255,255,.8)}
-    .mini-panel small{color:var(--muted);display:block;margin-bottom:3px}.mini-panel strong{font-size:14px}
-    section{padding:84px 0}
-    .section-head{display:flex;justify-content:space-between;gap:30px;align-items:end;margin-bottom:34px}
-    .section-head h2{font-size:clamp(34px,5vw,56px);letter-spacing:-.04em;line-height:1.05;margin:0;max-width:720px}
-    .section-head p{color:var(--muted);line-height:1.7;max-width:470px;margin:0}
-    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-    .card{border:1px solid var(--line);border-radius:var(--radius);background:var(--card);padding:26px;box-shadow:0 12px 44px rgba(0,0,0,.08);transition:.25s ease;backdrop-filter:blur(12px)}
-    .card:hover{transform:translateY(-5px);background:var(--card-strong)}
-    .card-icon{width:52px;height:52px;border-radius:17px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(83,168,255,.24),rgba(125,108,255,.20));border:1px solid var(--line);font-size:22px;margin-bottom:28px}
-    .card h3{font-size:22px;margin:0 0 12px}.card p{color:var(--muted);line-height:1.65;margin:0}
-    .process{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;counter-reset:step}
-    .step{position:relative;padding:24px;border-radius:24px;border:1px solid var(--line);background:var(--card);min-height:210px}
-    .step:before{counter-increment:step;content:"0" counter(step);display:inline-grid;place-items:center;width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,var(--primary),var(--primary-2));color:#fff;font-weight:800;margin-bottom:36px}
-    .step h3{margin:0 0 10px}.step p{margin:0;color:var(--muted);line-height:1.6;font-size:14px}
-    .showcase{display:grid;grid-template-columns:1.15fr .85fr;gap:16px}
-    .project{min-height:360px;border:1px solid var(--line);border-radius:32px;padding:28px;position:relative;overflow:hidden;background:linear-gradient(145deg,rgba(83,168,255,.13),rgba(125,108,255,.08));display:flex;flex-direction:column;justify-content:flex-end}
-    .project.small{min-height:360px;background:linear-gradient(145deg,rgba(103,232,196,.10),rgba(83,168,255,.06))}
-    .project:before{content:"";position:absolute;right:-40px;top:-40px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(83,168,255,.38),transparent 68%);filter:blur(3px)}
-    .project .tag{position:absolute;top:24px;left:24px;padding:8px 11px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--muted);font-size:12px;font-weight:800}
-    .project h3{font-size:32px;letter-spacing:-.03em;margin:0 0 8px;position:relative}.project p{color:var(--muted);line-height:1.6;margin:0;max-width:560px;position:relative}
-    .cta{border:1px solid var(--line);border-radius:38px;padding:54px;background:linear-gradient(135deg,rgba(83,168,255,.18),rgba(125,108,255,.14),rgba(103,232,196,.08));display:flex;justify-content:space-between;gap:32px;align-items:center;box-shadow:var(--shadow)}
-    .cta h2{font-size:clamp(34px,5vw,58px);line-height:1.03;letter-spacing:-.045em;margin:0 0 12px}.cta p{color:var(--muted);margin:0;line-height:1.7;max-width:620px}
-    .faq{display:grid;gap:12px}.faq details{border:1px solid var(--line);background:var(--card);border-radius:20px;padding:0 20px}.faq summary{cursor:pointer;list-style:none;padding:20px 0;font-weight:800;display:flex;justify-content:space-between;gap:20px}.faq summary:after{content:"+";font-size:22px;color:var(--primary)}.faq details[open] summary:after{content:"–"}.faq p{color:var(--muted);line-height:1.7;margin:0;padding:0 0 20px}
-    footer{padding:38px 0 54px;color:var(--muted);font-size:14px}.footer-row{display:flex;justify-content:space-between;gap:20px;align-items:center;border-top:1px solid var(--line);padding-top:28px}
-    .reveal{opacity:0;transform:translateY(18px);transition:.7s ease}.reveal.show{opacity:1;transform:none}
-    @media(max-width:920px){
-      .nav-links{display:none}.menu-btn{display:grid}.hero{padding-top:58px}.hero-grid,.showcase{grid-template-columns:1fr}.orbital{min-height:auto}.visual-card{width:min(100%,560px)}.grid3{grid-template-columns:1fr 1fr}.process{grid-template-columns:1fr 1fr}.section-head{align-items:start;flex-direction:column}.cta{align-items:flex-start;flex-direction:column}.nav-links.open{display:flex;position:absolute;top:78px;left:16px;right:16px;flex-direction:column;align-items:stretch;padding:18px;border:1px solid var(--line);border-radius:20px;background:var(--bg-soft);box-shadow:var(--shadow)}
-    }
-    @media(max-width:620px){
-      .container{width:min(100% - 22px,1180px)}nav{border-radius:18px}.nav-actions .btn{display:none}.hero{padding:44px 0 48px}h1{font-size:48px}.hero p{font-size:16px}.hero-actions{display:grid;grid-template-columns:1fr}.btn{width:100%}.visual-card{border-radius:28px}.orbital{margin-top:12px}.grid3,.process{grid-template-columns:1fr}.project,.project.small{min-height:300px}.cta{padding:30px;border-radius:28px}section{padding:62px 0}.section-head{margin-bottom:24px}.footer-row{flex-direction:column;align-items:flex-start}
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050b18">
+<meta name="description" content="AIORBITLAB — AI Agent, aplikasi AI custom, automasi bisnis, dan integrasi sistem.">
+<title>AIORBITLAB — Build Smarter with AI</title>
+<style>
+:root{
+  --bg:#050b18;--bg2:#091326;--panel:rgba(255,255,255,.065);--panel2:rgba(255,255,255,.105);
+  --text:#f7fbff;--muted:#95a7bd;--line:rgba(255,255,255,.11);--blue:#4da3ff;--violet:#7968ff;
+  --cyan:#65e6d2;--shadow:0 32px 90px rgba(0,0,0,.38);--radius:28px;--nav:rgba(6,13,28,.72)
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text);background:var(--bg);overflow-x:hidden}
+body.light{--bg:#f5f9ff;--bg2:#fff;--panel:rgba(255,255,255,.8);--panel2:#fff;--text:#0a1730;--muted:#607089;--line:rgba(10,23,48,.1);--shadow:0 26px 70px rgba(43,77,119,.14);--nav:rgba(250,252,255,.8)}
+a{color:inherit;text-decoration:none}button{font:inherit}.shell{width:min(1180px,calc(100% - 32px));margin:auto}.noise{position:fixed;inset:0;pointer-events:none;opacity:.035;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");z-index:99}
+.bgfx{position:fixed;inset:0;overflow:hidden;z-index:-2;background:radial-gradient(circle at 12% 8%,rgba(77,163,255,.22),transparent 26%),radial-gradient(circle at 86% 12%,rgba(121,104,255,.18),transparent 27%),linear-gradient(180deg,var(--bg),#071225 55%,var(--bg));transition:.3s}
+body.light .bgfx{background:radial-gradient(circle at 12% 8%,rgba(77,163,255,.17),transparent 26%),radial-gradient(circle at 86% 12%,rgba(121,104,255,.12),transparent 27%),linear-gradient(180deg,#f8fbff,#eef5ff 55%,#fff)}
+.gridfx{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:64px 64px;mask-image:linear-gradient(to bottom,black,transparent 72%)}body.light .gridfx{background-image:linear-gradient(rgba(13,46,88,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(13,46,88,.035) 1px,transparent 1px)}
+.orb{position:absolute;border-radius:50%;filter:blur(70px);opacity:.25}.orb.a{width:340px;height:340px;background:#2d83ff;left:-120px;top:35%}.orb.b{width:300px;height:300px;background:#7d63ff;right:-100px;top:48%}
+.navbar{position:sticky;top:0;z-index:60;padding:14px 0}.nav{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:10px 12px 10px 14px;border:1px solid var(--line);border-radius:20px;background:var(--nav);backdrop-filter:blur(24px);box-shadow:0 16px 50px rgba(0,0,0,.13)}
+.brand{display:flex;align-items:center;gap:11px;font-weight:900;letter-spacing:.04em}.logo{width:38px;height:38px;border-radius:13px;background:linear-gradient(135deg,var(--blue),var(--violet));position:relative;box-shadow:0 12px 30px rgba(77,163,255,.28)}.logo:before{content:"";position:absolute;inset:9px;border:2px solid #fff;border-radius:50%}.logo:after{content:"";position:absolute;width:5px;height:5px;border-radius:50%;background:#fff;right:6px;top:17px;box-shadow:-25px 0 #fff}
+.links{display:flex;gap:25px;color:var(--muted);font-size:14px;font-weight:650}.links a{transition:.2s}.links a:hover{color:var(--text)}.actions{display:flex;gap:8px;align-items:center}.iconbtn,.menubtn{width:42px;height:42px;border:1px solid var(--line);border-radius:14px;background:var(--panel);color:var(--text);cursor:pointer;display:grid;place-items:center}.menubtn{display:none}.btn{border:1px solid var(--line);border-radius:15px;padding:0 18px;min-height:46px;display:inline-flex;align-items:center;justify-content:center;gap:9px;font-weight:800;cursor:pointer;transition:.22s;background:var(--panel);color:var(--text)}.btn:hover{transform:translateY(-2px)}.primary{border:0;background:linear-gradient(135deg,var(--blue),var(--violet));color:white;box-shadow:0 14px 34px rgba(77,163,255,.23)}
+.hero{padding:92px 0 76px}.hero-grid{display:grid;grid-template-columns:1.04fr .96fr;align-items:center;gap:58px}.badge{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line);border-radius:999px;padding:8px 12px;background:var(--panel);color:var(--muted);font-size:13px;font-weight:800;margin-bottom:22px}.dot{width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 18px var(--cyan)}
+h1{font-size:clamp(52px,7.2vw,90px);line-height:.96;letter-spacing:-.065em;margin:0 0 24px}.gradient{background:linear-gradient(95deg,#fff 0%,#9cd4ff 43%,#a69cff 72%,#74ead4 100%);-webkit-background-clip:text;background-clip:text;color:transparent}body.light .gradient{background:linear-gradient(95deg,#0b1d39,#1478ce 48%,#6451e0 82%);-webkit-background-clip:text;background-clip:text;color:transparent}.lead{font-size:18px;line-height:1.75;color:var(--muted);max-width:660px;margin:0 0 30px}.hero-actions{display:flex;flex-wrap:wrap;gap:11px}.trust{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:29px;color:var(--muted);font-size:13px}.trust span{display:flex;gap:7px;align-items:center}.trust b{color:var(--text)}
+.console-wrap{position:relative;min-height:520px;display:grid;place-items:center}.halo{position:absolute;width:440px;height:440px;border-radius:50%;background:radial-gradient(circle,rgba(89,132,255,.23),transparent 66%);filter:blur(4px);animation:pulse 5s ease-in-out infinite}@keyframes pulse{50%{transform:scale(1.08);opacity:.72}}.console{width:min(100%,510px);border:1px solid var(--line);border-radius:32px;background:linear-gradient(145deg,rgba(255,255,255,.11),rgba(255,255,255,.035));box-shadow:var(--shadow);backdrop-filter:blur(24px);overflow:hidden;position:relative}.console-top{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--line)}.lights{display:flex;gap:7px}.lights i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.28)}.status{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted)}.screen{padding:20px}.screen-title{font-size:13px;color:var(--muted);margin-bottom:16px}.prompt{padding:16px;border:1px solid var(--line);border-radius:18px;background:rgba(0,0,0,.17);font-size:14px;line-height:1.6}.prompt b{color:#9ed2ff}.typing{color:var(--muted);min-height:45px;margin-top:7px}.workflow{display:grid;gap:9px;margin-top:14px}.flow{display:flex;align-items:center;gap:11px;padding:12px 13px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.035)}.flow .ico{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(77,163,255,.25),rgba(121,104,255,.18));font-size:17px}.flow div{flex:1}.flow strong{display:block;font-size:13px}.flow small{color:var(--muted)}.ok{color:var(--cyan);font-size:12px;font-weight:900}.console-foot{display:flex;gap:8px;padding:14px 18px;border-top:1px solid var(--line);font-size:11px;color:var(--muted);justify-content:space-between}.floatcard{position:absolute;border:1px solid var(--line);border-radius:17px;padding:12px 14px;background:var(--nav);backdrop-filter:blur(18px);box-shadow:0 18px 45px rgba(0,0,0,.24);font-size:12px}.floatcard strong{display:block;font-size:17px;margin-bottom:2px}.fc1{left:-8px;top:90px}.fc2{right:-10px;bottom:95px}
+.marquee{border-block:1px solid var(--line);background:rgba(255,255,255,.025);overflow:hidden}.marquee-track{display:flex;gap:42px;width:max-content;padding:17px 0;color:var(--muted);font-size:12px;font-weight:850;letter-spacing:.12em;text-transform:uppercase;animation:marquee 20s linear infinite}.marquee-track span{white-space:nowrap}.marquee-track b{color:var(--text)}@keyframes marquee{to{transform:translateX(-50%)}}
+section{padding:88px 0}.head{display:flex;justify-content:space-between;align-items:end;gap:34px;margin-bottom:34px}.head h2{font-size:clamp(36px,5vw,58px);line-height:1.03;letter-spacing:-.05em;margin:0;max-width:760px}.head p{margin:0;max-width:450px;color:var(--muted);line-height:1.7}.kicker{font-size:12px;text-transform:uppercase;letter-spacing:.16em;font-weight:900;color:#8ecbff;margin-bottom:10px}
+.services{display:grid;grid-template-columns:repeat(12,1fr);gap:15px}.service{grid-column:span 4;min-height:255px;border:1px solid var(--line);border-radius:var(--radius);padding:25px;background:var(--panel);position:relative;overflow:hidden;transition:.25s;backdrop-filter:blur(12px)}.service.wide{grid-column:span 8}.service:hover{transform:translateY(-5px);background:var(--panel2)}.service:after{content:"";position:absolute;width:160px;height:160px;border-radius:50%;right:-65px;top:-65px;background:radial-gradient(circle,rgba(77,163,255,.25),transparent 68%)}.service .num{font-size:12px;color:var(--muted);font-weight:900}.sicon{width:52px;height:52px;border:1px solid var(--line);border-radius:17px;display:grid;place-items:center;margin:24px 0;background:linear-gradient(135deg,rgba(77,163,255,.21),rgba(121,104,255,.16));font-size:22px}.service h3{font-size:22px;margin:0 0 10px}.service p{color:var(--muted);line-height:1.65;margin:0;max-width:590px}.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:20px}.chip{padding:7px 10px;border:1px solid var(--line);border-radius:999px;font-size:11px;color:var(--muted);background:rgba(255,255,255,.03)}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.metric{padding:25px;border:1px solid var(--line);border-radius:24px;background:var(--panel)}.metric strong{font-size:36px;letter-spacing:-.05em}.metric span{display:block;color:var(--muted);font-size:13px;margin-top:7px;line-height:1.5}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;counter-reset:n}.step{border:1px solid var(--line);border-radius:24px;padding:24px;background:var(--panel);min-height:230px}.step:before{counter-increment:n;content:"0" counter(n);width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,var(--blue),var(--violet));font-weight:900;margin-bottom:38px}.step h3{margin:0 0 9px}.step p{margin:0;color:var(--muted);font-size:14px;line-height:1.65}
+.work{display:grid;grid-template-columns:1.2fr .8fr;gap:15px}.project{min-height:380px;border:1px solid var(--line);border-radius:32px;padding:28px;background:linear-gradient(145deg,rgba(77,163,255,.14),rgba(121,104,255,.08));position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end}.project.alt{background:linear-gradient(145deg,rgba(101,230,210,.1),rgba(77,163,255,.07))}.project .label{position:absolute;top:24px;left:24px;border:1px solid var(--line);border-radius:999px;padding:8px 11px;font-size:11px;font-weight:850;color:var(--muted);background:var(--panel)}.project h3{font-size:32px;letter-spacing:-.035em;margin:0 0 9px}.project p{color:var(--muted);line-height:1.65;margin:0;max-width:560px}.mock{position:absolute;right:-55px;top:55px;width:330px;height:230px;border:1px solid var(--line);border-radius:25px;background:rgba(8,17,33,.7);transform:rotate(-6deg);box-shadow:var(--shadow);padding:18px}.alt .mock{width:260px;right:-60px;transform:rotate(7deg)}.mockbar{height:12px;width:46%;border-radius:999px;background:rgba(255,255,255,.13);margin-bottom:15px}.mockrow{height:44px;border-radius:13px;background:rgba(255,255,255,.06);margin:8px 0;border:1px solid rgba(255,255,255,.05)}body.light .mock{background:rgba(255,255,255,.84)}body.light .mockbar,body.light .mockrow{background:rgba(21,62,108,.08)}
+.faq{display:grid;gap:11px}.faq details{border:1px solid var(--line);border-radius:20px;background:var(--panel);padding:0 20px}.faq summary{list-style:none;cursor:pointer;font-weight:850;padding:20px 0;display:flex;justify-content:space-between;gap:20px}.faq summary::-webkit-details-marker{display:none}.faq summary:after{content:"+";color:var(--blue);font-size:22px}.faq details[open] summary:after{content:"−"}.faq p{margin:0;padding:0 0 20px;color:var(--muted);line-height:1.7}
+.cta{border:1px solid var(--line);border-radius:38px;padding:54px;background:linear-gradient(130deg,rgba(77,163,255,.19),rgba(121,104,255,.15),rgba(101,230,210,.07));display:flex;justify-content:space-between;align-items:center;gap:34px;box-shadow:var(--shadow)}.cta h2{font-size:clamp(36px,5vw,60px);letter-spacing:-.055em;line-height:1.02;margin:0 0 12px}.cta p{margin:0;color:var(--muted);line-height:1.7;max-width:650px}.cta .btn{white-space:nowrap}
+footer{padding:30px 0 54px;color:var(--muted);font-size:13px}.footer{padding-top:27px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:22px;align-items:center}.footer-links{display:flex;gap:18px}.reveal{opacity:0;transform:translateY(18px);transition:.65s ease}.reveal.show{opacity:1;transform:none}
+@media(max-width:980px){.links{display:none}.menubtn{display:grid}.links.open{display:flex;position:absolute;top:76px;left:16px;right:16px;flex-direction:column;align-items:stretch;padding:18px;border:1px solid var(--line);border-radius:20px;background:var(--bg2);box-shadow:var(--shadow)}.hero{padding-top:58px}.hero-grid,.work{grid-template-columns:1fr}.console-wrap{margin-top:15px}.services .service,.services .service.wide{grid-column:span 6}.steps{grid-template-columns:1fr 1fr}.metrics{grid-template-columns:1fr 1fr}.head{flex-direction:column;align-items:flex-start}.project{min-height:340px}}
+@media(max-width:640px){.shell{width:min(100% - 22px,1180px)}.nav{border-radius:18px}.actions .primary{display:none}.hero{padding:44px 0 52px}h1{font-size:49px}.lead{font-size:16px}.hero-actions{display:grid}.hero-actions .btn{width:100%}.console-wrap{min-height:430px}.console{border-radius:25px}.floatcard{display:none}.services .service,.services .service.wide{grid-column:1/-1}.metrics,.steps{grid-template-columns:1fr}.metric{display:flex;align-items:center;justify-content:space-between;gap:15px}.metric span{max-width:58%;text-align:right}.project{min-height:325px;padding:24px}.mock{opacity:.55;right:-100px}.cta{padding:30px;border-radius:28px;align-items:flex-start;flex-direction:column}.cta .btn{width:100%}section{padding:66px 0}.head{margin-bottom:24px}.footer{flex-direction:column;align-items:flex-start}.marquee-track{gap:28px}}
+</style>
 </head>
 <body>
-  <div class="nav-wrap">
-    <div class="container">
-      <nav>
-        <a class="brand" href="#top" aria-label="AIORBITLAB beranda">
-          <span class="brand-mark"></span><span>AIORBITLAB</span>
-        </a>
-        <div class="nav-links" id="navLinks">
-          <a href="#layanan">Layanan</a>
-          <a href="#proses">Proses</a>
-          <a href="#proyek">Solusi</a>
-          <a href="#faq">FAQ</a>
-        </div>
-        <div class="nav-actions">
-          <button class="icon-btn" id="themeToggle" aria-label="Ganti tema">☾</button>
-          <a class="btn btn-primary" href="#kontak">Mulai Proyek</a>
-          <button class="menu-btn" id="menuBtn" aria-label="Buka menu">☰</button>
-        </div>
-      </nav>
-    </div>
-  </div>
-
-  <main id="top">
-    <header class="hero">
-      <div class="container hero-grid">
-        <div class="reveal">
-          <div class="eyebrow"><i></i> AI Agent • Automation • Custom App</div>
-          <h1><span class="grad">AI yang bekerja</span><br>untuk bisnis kamu.</h1>
-          <p>AIORBITLAB membantu bisnis membangun aplikasi AI, AI Agent, dashboard operasional, dan automasi kerja yang disesuaikan dengan kebutuhan nyata—bukan sekadar demo.</p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#kontak">Konsultasi Proyek →</a>
-            <a class="btn btn-soft" href="#layanan">Lihat Kemampuan</a>
-          </div>
-          <div class="proof">
-            <span>✓ <b>Custom</b> sesuai alur kerja</span>
-            <span>✓ <b>Responsive</b> HP & desktop</span>
-            <span>✓ <b>Integrasi</b> API & database</span>
-          </div>
-        </div>
-
-        <div class="orbital reveal" aria-label="Ilustrasi ekosistem AI">
-          <div class="visual-card">
-            <div class="planet"></div>
-            <div class="orbit-dot d1">⚡</div>
-            <div class="orbit-dot d2">◈</div>
-            <div class="orbit-dot d3">◎</div>
-            <div class="orbit-dot d4">↗</div>
-            <div class="mini-panel">
-              <div><small>AI System</small><strong>Business automation online</strong></div>
-              <span style="color:var(--accent);font-weight:800">● ACTIVE</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <section id="layanan">
-      <div class="container">
-        <div class="section-head reveal">
-          <h2>Satu partner untuk membangun <span class="grad">sistem AI end-to-end.</span></h2>
-          <p>Dari ide sampai aplikasi siap dipakai, fokusnya adalah mempercepat pekerjaan, merapikan data, dan mengurangi proses manual.</p>
-        </div>
-        <div class="grid3">
-          <article class="card reveal"><div class="card-icon">✦</div><h3>AI Agent Custom</h3><p>Agent untuk membaca data, membuat laporan, membantu operasional, menjawab pertanyaan, dan menjalankan alur kerja multi-step.</p></article>
-          <article class="card reveal"><div class="card-icon">⌘</div><h3>Aplikasi Web & Mobile</h3><p>Dashboard modern dan responsif untuk keuangan, rental, inventory, internal tools, CRM, dan kebutuhan bisnis lainnya.</p></article>
-          <article class="card reveal"><div class="card-icon">⇄</div><h3>Automation & Integrasi</h3><p>Hubungkan Telegram, WhatsApp gateway, API, database, spreadsheet, storage, dan layanan lain menjadi satu workflow.</p></article>
-          <article class="card reveal"><div class="card-icon">▦</div><h3>Dashboard & Database</h3><p>Data operasional tersimpan rapi, bisa dicari, difilter, dianalisis, dan ditampilkan dalam grafik yang mudah dipahami.</p></article>
-          <article class="card reveal"><div class="card-icon">◉</div><h3>AI Vision & Dokumen</h3><p>Baca struk, invoice, bukti transfer, foto, atau dokumen untuk ekstraksi data dan otomatisasi pencatatan.</p></article>
-          <article class="card reveal"><div class="card-icon">↗</div><h3>Deploy & Scale</h3><p>Siapkan aplikasi untuk GitHub, hosting modern, database online, environment production, serta struktur yang mudah dikembangkan.</p></article>
-        </div>
-      </div>
-    </section>
-
-    <section id="proses">
-      <div class="container">
-        <div class="section-head reveal">
-          <h2>Dari kebutuhan bisnis sampai <span class="grad">sistem yang jalan.</span></h2>
-          <p>Proses dibuat simpel supaya kamu tahu apa yang dibangun dan bagaimana hasil akhirnya dipakai.</p>
-        </div>
-        <div class="process">
-          <div class="step reveal"><h3>Pahami kebutuhan</h3><p>Petakan masalah, pengguna, alur kerja, dan hasil yang ingin dicapai.</p></div>
-          <div class="step reveal"><h3>Desain sistem</h3><p>Susun UI, database, integrasi, role, serta fitur inti yang benar-benar dibutuhkan.</p></div>
-          <div class="step reveal"><h3>Bangun & uji</h3><p>Kembangkan aplikasi, tes setiap tombol, form, penyimpanan, dan alur penting.</p></div>
-          <div class="step reveal"><h3>Deploy & iterasi</h3><p>Publikasikan, monitor penggunaan, lalu kembangkan fitur berdasarkan kebutuhan berikutnya.</p></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="proyek">
-      <div class="container">
-        <div class="section-head reveal">
-          <h2>Contoh solusi yang bisa <span class="grad">dibangun.</span></h2>
-          <p>Bukan template satu ukuran untuk semua. Sistem bisa mengikuti proses bisnis dan identitas brand kamu.</p>
-        </div>
-        <div class="showcase">
-          <article class="project reveal">
-            <span class="tag">BUSINESS OPERATIONS</span>
-            <h3>AI Operations Hub</h3>
-            <p>Satu dashboard untuk transaksi, inventory, dokumen, notifikasi, laporan, dan AI Agent yang membantu pekerjaan tim.</p>
-          </article>
-          <article class="project small reveal">
-            <span class="tag">PERSONAL & FAMILY</span>
-            <h3>Smart Finance App</h3>
-            <p>Kelola transaksi, rekening, agenda, target tabungan, laporan, serta pembacaan struk otomatis dengan AI.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="faq">
-      <div class="container">
-        <div class="section-head reveal">
-          <h2>Pertanyaan yang sering <span class="grad">muncul.</span></h2>
-          <p>Hal dasar sebelum mulai membangun aplikasi atau AI Agent custom.</p>
-        </div>
-        <div class="faq">
-          <details class="reveal"><summary>Apakah sistem bisa dibuat khusus sesuai bisnis saya?</summary><p>Bisa. Struktur fitur, role pengguna, data, tampilan, dan integrasi dapat disesuaikan dengan kebutuhan operasional.</p></details>
-          <details class="reveal"><summary>Bisa dipakai dari HP?</summary><p>Bisa. Website dan dashboard dirancang responsive agar nyaman digunakan dari HP, tablet, maupun desktop.</p></details>
-          <details class="reveal"><summary>Bisa terhubung ke Telegram, WhatsApp, atau database?</summary><p>Bisa, selama layanan yang digunakan menyediakan API atau metode integrasi yang sesuai.</p></details>
-          <details class="reveal"><summary>Apakah bisa dimulai dari versi sederhana?</summary><p>Bisa. Proyek dapat dimulai dari MVP dengan fitur inti, kemudian dikembangkan bertahap setelah alurnya sudah terbukti berguna.</p></details>
-        </div>
-      </div>
-    </section>
-
-    <section id="kontak">
-      <div class="container">
-        <div class="cta reveal">
-          <div>
-            <h2>Punya ide? Ubah jadi <span class="grad">sistem yang bekerja.</span></h2>
-            <p>Mulai dari kebutuhan paling penting. AIORBITLAB dapat membantu menyusun solusi aplikasi, agent, database, dan automasi yang lebih rapi untuk bisnis kamu.</p>
-          </div>
-          <a class="btn btn-primary" href="mailto:hello@aiorbitlab.com">Hubungi AIORBITLAB →</a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container footer-row">
-      <a class="brand" href="#top"><span class="brand-mark"></span><span>AIORBITLAB</span></a>
-      <span>© <span id="year"></span> AIORBITLAB. Built for smarter work.</span>
-    </div>
-  </footer>
-
-  <script>
-    const body=document.body;
-    const themeToggle=document.getElementById('themeToggle');
-    const menuBtn=document.getElementById('menuBtn');
-    const navLinks=document.getElementById('navLinks');
-    document.getElementById('year').textContent=new Date().getFullYear();
-
-    const savedTheme=localStorage.getItem('aiorbit-theme');
-    if(savedTheme==='light'){body.classList.add('light');themeToggle.textContent='☀'}
-    themeToggle.addEventListener('click',()=>{
-      body.classList.toggle('light');
-      const light=body.classList.contains('light');
-      themeToggle.textContent=light?'☀':'☾';
-      localStorage.setItem('aiorbit-theme',light?'light':'dark');
-    });
-
-    menuBtn.addEventListener('click',()=>navLinks.classList.toggle('open'));
-    navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open')));
-
-    const observer=new IntersectionObserver(entries=>{
-      entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add('show')});
-    },{threshold:.12});
-    document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
-  </script>
-</body>
-</html>
+<div class="noise"></div><div class="bgfx"><div class="gridfx"></div><i class="orb a"></i><i class="orb b"></i></div>
+<header class="navbar"><div class="shell"><nav class="nav">
+<a class="brand" href="#top"><span class="logo"></span><span>AIORBITLAB</span></a>
+<div class="links" id="links"><a href="#layanan">Layanan</a><a href="#cara">Cara Kerja</a><a href="#project">Project</a><a href="#faq">FAQ</a></div>
+<div class="actions"><button class="iconbtn" id="theme" aria-label="Ganti tema">☼</button><a class="btn primary" href="#contact">Mulai Project</a><button class="menubtn" id="menu" aria-label="Menu">☰</button></div>
+</nav></div></header>
+<main id="top">
+<section class="hero"><div class="shell hero-grid">
+<div>
+<div class="badge"><i class="dot"></i> AI Agent • Apps • Automation</div>
+<h1>Bisnis bergerak <span class="gradient">lebih pintar dengan AI.</span></h1>
+<p class="lead">AIORBITLAB membantu bisnis membangun aplikasi AI, agent otomatis, dashboard, integrasi Telegram/WhatsApp, dan sistem custom yang benar-benar mengikuti alur kerja tim.</p>
+<div class="hero-actions"><a class="btn primary" href="#layanan">Jelajahi Solusi <span>↗</span></a><a class="btn" href="#project">Lihat Contoh Project</a></div>
+<div class="trust"><span>✓ <b>Custom Workflow</b></span><span>✓ <b>Responsive</b></span><span>✓ <b>Database Ready</b></span><span>✓ <b>Integrasi API</b></span></div>
+</div>
+<div class="console-wrap">
+<div class="halo"></div>
+<div class="floatcard fc1"><strong>24/7</strong>Agent aktif otomatis</div><div class="floatcard fc2"><strong>1 Sistem</strong>Semua workflow terhubung</div>
+<div class="console">
+<div class="console-top"><div class="lights"><i></i><i></i><i></i></div><div class="status"><i class="dot"></i> AI Command Center</div></div>
+<div class="screen"><div class="screen-title">Apa yang ingin diotomatisasi?</div><div class="prompt"><b>›</b> <span id="typeText"></span><div class="typing">AI sedang menjalankan workflow...</div></div>
+<div class="workflow"><div class="flow"><span class="ico">✦</span><div><strong>AI memahami input</strong><small>Teks, foto, file & data</small></div><span class="ok">DONE</span></div><div class="flow"><span class="ico">⌁</span><div><strong>Proses otomatis</strong><small>Validasi, kategorisasi & routing</small></div><span class="ok">LIVE</span></div><div class="flow"><span class="ico">↗</span><div><strong>Kirim ke sistem</strong><small>Database, Telegram & dashboard</small></div><span class="ok">SYNC</span></div></div></div>
+<div class="console-foot"><span>MODEL • AUTO</span><span>SECURE WORKFLOW</span><span>API READY</span></div>
+</div></div>
+</div></section>
+<div class="marquee"><div class="marquee-track"><span><b>AI Agent</b> untuk operasional</span><span>Dashboard custom</span><span><b>Telegram</b> automation</span><span>WhatsApp integration</span><span><b>Database</b> workflow</span><span>Mobile-first apps</span><span><b>AI Agent</b> untuk operasional</span><span>Dashboard custom</span><span><b>Telegram</b> automation</span><span>WhatsApp integration</span><span><b>Database</b> workflow</span><span>Mobile-first apps</span></div></div>
+<section id="layanan"><div class="shell"><div class="head reveal"><div><div class="kicker">What we build</div><h2>Dari pekerjaan manual menjadi sistem yang bergerak sendiri.</h2></div><p>Kami fokus pada solusi yang berguna sehari-hari: lebih sedikit klik, input lebih cepat, data lebih rapi, dan proses lebih mudah dipantau.</p></div>
+<div class="services">
+<article class="service wide reveal"><div class="num">01 — AI AGENT</div><div class="sicon">✦</div><h3>AI Agent untuk bisnis</h3><p>Agent yang bisa membaca data, membantu input, membuat ringkasan, memproses dokumen, dan menjalankan workflow operasional sesuai kebutuhan bisnis.</p><div class="chips"><span class="chip">Multi Agent</span><span class="chip">Tools</span><span class="chip">Memory</span><span class="chip">Automation</span></div></article>
+<article class="service reveal"><div class="num">02 — APP</div><div class="sicon">◫</div><h3>Aplikasi custom</h3><p>Web app dan dashboard responsif yang dibuat khusus mengikuti alur kerja perusahaan.</p></article>
+<article class="service reveal"><div class="num">03 — CHAT</div><div class="sicon">◌</div><h3>Telegram & WhatsApp</h3><p>Hubungkan bot, notifikasi, input transaksi, laporan, dan workflow ke aplikasi utama.</p></article>
+<article class="service reveal"><div class="num">04 — DATA</div><div class="sicon">⌘</div><h3>Database & API</h3><p>Supabase, SQL, API, autentikasi, penyimpanan, dan sinkronisasi data real-time.</p></article>
+<article class="service wide reveal"><div class="num">05 — AUTOMATION</div><div class="sicon">⚡</div><h3>Automasi proses end-to-end</h3><p>Dari data masuk sampai laporan jadi: scan dokumen, ekstraksi AI, validasi, simpan database, kirim notifikasi, dan dashboard—dalam satu alur.</p><div class="chips"><span class="chip">OCR / Vision</span><span class="chip">Webhook</span><span class="chip">Scheduler</span><span class="chip">Reports</span></div></article>
+</div></div></section>
+<section><div class="shell"><div class="metrics reveal"><div class="metric"><strong>01</strong><span>Satu aplikasi untuk menghubungkan proses penting.</span></div><div class="metric"><strong>24/7</strong><span>Workflow otomatis dapat berjalan tanpa menunggu input manual.</span></div><div class="metric"><strong>API</strong><span>Siap dihubungkan ke layanan dan sistem eksternal.</span></div><div class="metric"><strong>AI+</strong><span>AI menjadi bagian dari workflow, bukan sekadar chatbot.</span></div></div></div></section>
+<section id="cara"><div class="shell"><div class="head reveal"><div><div class="kicker">How it works</div><h2>Dari ide sampai sistem siap dipakai.</h2></div><p>Proses dibuat sederhana supaya kebutuhan bisnis cepat diterjemahkan menjadi produk yang jelas.</p></div><div class="steps"><div class="step reveal"><h3>Pahami workflow</h3><p>Kami petakan proses yang sekarang, masalah utama, pengguna, dan target otomatisasi.</p></div><div class="step reveal"><h3>Desain solusi</h3><p>Struktur fitur, database, integrasi, dan pengalaman pengguna dirancang sebelum implementasi.</p></div><div class="step reveal"><h3>Build & test</h3><p>Aplikasi dibuat, diuji di mobile/desktop, lalu alur AI dan integrasi diperiksa.</p></div><div class="step reveal"><h3>Deploy & improve</h3><p>Sistem dipublikasikan dan dapat dikembangkan lagi berdasarkan kebutuhan baru.</p></div></div></div></section>
+<section id="project"><div class="shell"><div class="head reveal"><div><div class="kicker">Example solutions</div><h2>Sistem yang terasa seperti dibuat khusus untuk tim kamu.</h2></div><p>Bukan template generik. Setiap fitur dapat disusun mengikuti proses bisnis yang sebenarnya.</p></div><div class="work"><article class="project reveal"><div class="label">FINANCE AI SYSTEM</div><div class="mock"><div class="mockbar"></div><div class="mockrow"></div><div class="mockrow"></div><div class="mockrow"></div></div><h3>AI Finance Workspace</h3><p>Scan struk dengan AI, transaksi otomatis, rekening, kalender, laporan interaktif, penyimpanan database, dan integrasi bot.</p></article><article class="project alt reveal"><div class="label">OPERATIONS AGENT</div><div class="mock"><div class="mockbar"></div><div class="mockrow"></div><div class="mockrow"></div></div><h3>Business AI Agent</h3><p>Agent untuk input data, rekap operasional, reminder, dokumen, dan workflow bisnis.</p></article></div></div></section>
+<section id="faq"><div class="shell"><div class="head reveal"><div><div class="kicker">FAQ</div><h2>Pertanyaan yang sering muncul.</h2></div></div><div class="faq"><details class="reveal"><summary>Apakah aplikasinya bisa dibuat sesuai kebutuhan bisnis?</summary><p>Bisa. Struktur menu, role pengguna, workflow, database, integrasi API, dan tampilan dapat disesuaikan dengan proses kerja yang dibutuhkan.</p></details><details class="reveal"><summary>Apakah bisa terhubung ke Telegram atau WhatsApp?</summary><p>Bisa. Integrasi dapat digunakan untuk input data, notifikasi, laporan, bot, maupun komunikasi dengan sistem utama selama API atau gateway yang diperlukan tersedia.</p></details><details class="reveal"><summary>Apakah data bisa disimpan online?</summary><p>Bisa. Sistem dapat menggunakan database online seperti Supabase atau layanan SQL lainnya, lengkap dengan autentikasi dan aturan akses.</p></details><details class="reveal"><summary>Apakah tampilannya bisa dibuat untuk HP dan desktop?</summary><p>Bisa. Desain dibuat responsif sehingga alur utama tetap mudah digunakan dari layar HP maupun komputer.</p></details></div></div></section>
+<section id="contact"><div class="shell"><div class="cta reveal"><div><div class="kicker">Start building</div><h2>Punya proses yang ingin dibuat otomatis?</h2><p>Mulai dari satu workflow dulu. Ubah pekerjaan berulang menjadi aplikasi dan AI Agent yang lebih cepat, rapi, dan mudah dikembangkan.</p></div><a class="btn primary" href="mailto:hello@aiorbitlab.com">Mulai Diskusi ↗</a></div></div></section>
+</main>
+<footer><div class="shell footer"><div class="brand"><span class="logo"></span><span>AIORBITLAB</span></div><div>© <span id="year"></span> AIORBITLAB. Build smarter.</div><div class="footer-links"><a href="#layanan">Layanan</a><a href="#faq">FAQ</a></div></div></footer>
+<script>
+const body=document.body,theme=document.getElementById('theme'),menu=document.getElementById('menu'),links=document.getElementById('links');
+const saved=localStorage.getItem('aiorbit-theme');if(saved==='light'){body.classList.add('light');theme.textContent='☾'}
+theme.onclick=()=>{body.classList.toggle('light');const light=body.classList.contains('light');theme.textContent=light?'☾':'☼';localStorage.setItem('aiorbit-theme',light?'light':'dark')};
+menu.onclick=()=>links.classList.toggle('open');links.querySelectorAll('a').forEach(a=>a.onclick=()=>links.classList.remove('open'));
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')}),{threshold:.12});document.querySelectorAll('.reveal').forEach(x=>io.observe(x));
+const phrases=['Scan struk → baca nominal → simpan transaksi.','Buat quotation → kirim PDF → catat otomatis.','Input data Telegram → sinkron ke dashboard.','Ringkas operasional → buat laporan → kirim notifikasi.'];let pi=0,ci=0,del=false;const el=document.getElementById('typeText');
+function type(){const p=phrases[pi];if(!del){ci++;el.textContent=p.slice(0,ci);if(ci===p.length){del=true;return setTimeout(type,1500)}}else{ci--;el.textContent=p.slice(0,ci);if(ci===0){del=false;pi=(pi+1)%phrases.length}}setTimeout(type,del?24:42)}type();document.getElementById('year').textContent=new Date().getFullYear();
+</script>
+</body></html>
