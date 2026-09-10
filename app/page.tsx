@@ -1,269 +1,185 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-const services = [
-  {
-    icon: "✦",
-    title: "AI Agent",
-    text: "Agent AI yang membaca data, memahami konteks, lalu menjalankan pekerjaan berulang secara otomatis.",
-    meta: "Automation · Memory · Tools",
-  },
-  {
-    icon: "◫",
-    title: "Custom App",
-    text: "Aplikasi web dan dashboard custom yang mengikuti alur operasional bisnis Anda.",
-    meta: "Next.js · React · TypeScript",
-  },
-  {
-    icon: "↗",
-    title: "Automation",
-    text: "Hubungkan proses manual menjadi workflow otomatis yang lebih cepat dan konsisten.",
-    meta: "API · Webhook · Workflow",
-  },
-  {
-    icon: "◎",
-    title: "AI Integration",
-    text: "Integrasi OCR, Vision, LLM, chatbot, pencarian cerdas, dan analitik AI ke sistem internal.",
-    meta: "LLM · OCR · Vision",
-  },
+const projects = [
+  { type: "AI Agent", title: "Multi-Agent Operations", text: "AI agent untuk input data, rekap, follow-up, dan workflow operasional dalam satu sistem.", image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1600&q=88" },
+  { type: "Web App", title: "AI Finance Workspace", text: "Aplikasi keuangan personal dan keluarga dengan insight AI, scan struk, agenda, dan laporan.", image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=88" },
+  { type: "Operations", title: "Rental Control System", text: "Inventaris, transaksi, pelanggan, vendor, quotation, dan monitoring operasional rental.", image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1600&q=88" },
+  { type: "Automation", title: "Receipt Intelligence", text: "OCR struk dan bukti transfer, klasifikasi otomatis, sinkronisasi, dan rekap biaya.", image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1600&q=88" },
+  { type: "Inventory", title: "Inventory Intelligence", text: "Stok, serial number, status barang, aksesori, dan insight ketersediaan dalam satu dashboard.", image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1600&q=88" },
+  { type: "Integration", title: "Connected Business Hub", text: "Hubungkan dashboard, database, Telegram, WhatsApp, dokumen, dan API dalam satu alur.", image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1600&q=88" },
 ];
 
-const advantages = [
-  ["01", "Custom Workflow", "Dibangun mengikuti proses bisnis, bukan template generik."],
-  ["02", "Fast & Responsive", "UI cepat, mobile-first, dan nyaman dipakai sehari-hari."],
-  ["03", "Secure System", "Arsitektur modern dengan pemisahan data dan akses yang jelas."],
-  ["04", "Scalable", "Mudah dikembangkan saat tim, data, dan kebutuhan bisnis bertambah."],
+const services = [
+  ["01", "AI Agent", "Agent AI custom untuk customer support, input data, analisis, ringkasan, dan pekerjaan berulang."],
+  ["02", "Custom Application", "Aplikasi web dan dashboard yang dibangun mengikuti proses bisnis, bukan template generik."],
+  ["03", "Business Automation", "Otomatisasi pekerjaan berulang, notifikasi, dokumen, approval, dan workflow antar sistem."],
+  ["04", "Dashboard & Reporting", "KPI, grafik, laporan, monitoring, pencarian, dan kontrol data dalam satu tempat."],
+  ["05", "AI Integration", "Integrasi AI dengan Telegram, WhatsApp, database, API, dokumen, dan sistem internal."],
+  ["06", "OCR & Document AI", "Ubah struk, invoice, foto, dan PDF menjadi data terstruktur yang siap dipakai."],
 ];
 
 function BrandMark() {
-  return (
-    <span className="brand-mark" aria-hidden="true">
-      <span className="brand-core" />
-      <span className="brand-orbit" />
-    </span>
-  );
+  return <span className="brandMark" aria-hidden="true"><i /><b /></span>;
 }
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [filter, setFilter] = useState("All");
 
   useEffect(() => {
     const nodes = document.querySelectorAll<HTMLElement>(".reveal");
-    const observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) entry.target.classList.add("show");
-        });
-      },
-      { threshold: 0.12 }
-    );
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add("show");
+      });
+    }, { threshold: 0.1 });
     nodes.forEach(node => observer.observe(node));
-    return () => observer.disconnect();
+
+    const move = (event: MouseEvent) => {
+      document.documentElement.style.setProperty("--mx", `${event.clientX}px`);
+      document.documentElement.style.setProperty("--my", `${event.clientY}px`);
+    };
+    window.addEventListener("mousemove", move);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("mousemove", move);
+    };
   }, []);
 
+  const visibleProjects = useMemo(() => filter === "All" ? projects : projects.filter(p => p.type === filter), [filter]);
+  const filters = ["All", ...Array.from(new Set(projects.map(p => p.type)))];
+
   return (
-    <main className="site-shell">
-      <header className="site-header">
-        <div className="page-width nav-row">
-          <a href="#top" className="brand">
-            <BrandMark />
-            <span>AIORBITLAB</span>
-          </a>
-
-          <nav className="desktop-nav" aria-label="Navigasi utama">
-            <a href="#about">Tentang</a>
-            <a href="#services">Layanan</a>
-            <a href="#process">Cara Kerja</a>
-            <a href="#contact">Kontak</a>
+    <main>
+      <header className="topbar">
+        <div className="page nav">
+          <a className="brand" href="#top"><BrandMark /><span>AIORBITLAB</span></a>
+          <nav className="desktopNav">
+            <a href="#studio">Studio</a><a href="#services">Services</a><a href="#work">Portfolio</a><a href="#process">Process</a>
           </nav>
-
-          <div className="nav-actions">
-            <a href="#contact" className="nav-cta">Mulai Project</a>
-            <button className="menu-button" onClick={() => setMenuOpen(v => !v)} aria-label="Buka menu">
-              {menuOpen ? "×" : "☰"}
-            </button>
+          <div className="navActions">
+            <a className="navGhost" href="#work">View Work</a>
+            <a className="navSolid" href="#contact">Start Project ↗</a>
+            <button className="menuButton" onClick={() => setMenuOpen(v => !v)} aria-label="Menu">{menuOpen ? "×" : "☰"}</button>
+          </div>
+          <div className={`mobileNav ${menuOpen ? "open" : ""}`}>
+            {[["Studio", "#studio"], ["Services", "#services"], ["Portfolio", "#work"], ["Process", "#process"], ["Contact", "#contact"]].map(([label, href]) => <a key={href} href={href} onClick={() => setMenuOpen(false)}>{label}</a>)}
           </div>
         </div>
-
-        {menuOpen && (
-          <div className="page-width mobile-nav">
-            {[["Tentang", "#about"], ["Layanan", "#services"], ["Cara Kerja", "#process"], ["Kontak", "#contact"]].map(([label, href]) => (
-              <a key={href} href={href} onClick={() => setMenuOpen(false)}>{label}</a>
-            ))}
-          </div>
-        )}
       </header>
 
-      <section id="top" className="hero-section">
-        <div className="hero-bg" />
-        <div className="hero-shade" />
-        <div className="page-width hero-grid">
-          <div className="hero-copy reveal">
-            <p className="script-label">Intelligent. Elegant. Practical.</p>
-            <h1>
-              Experience AI
-              <span>Like Never Before</span>
-            </h1>
-            <p className="hero-lead">
-              Solusi AI custom untuk bisnis modern — dari agent otomatis, dashboard, integrasi data, sampai workflow yang bekerja 24/7.
-            </p>
-            <div className="hero-actions">
-              <a className="primary-brown" href="#services">Explore Services <span>→</span></a>
-              <a className="outline-button" href="#about">Our Story <span>↗</span></a>
+      <section id="top" className="hero">
+        <div className="heroBackdrop"><img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=2400&q=92" alt="Digital world" /></div>
+        <div className="heroNoise" />
+        <div className="page heroGrid">
+          <div className="heroCopy reveal show">
+            <p className="eyebrow"><span /> AI systems for modern business</p>
+            <h1>Build a business that <em>thinks.</em></h1>
+            <p className="heroLead">AIORBITLAB merancang AI Agent, aplikasi custom, automasi, dashboard, OCR, dan integrasi yang benar-benar bekerja di operasional harian.</p>
+            <div className="heroButtons">
+              <a className="button light" href="#work">Explore Portfolio ↗</a>
+              <a className="button glass" href="#services">What We Build</a>
             </div>
-            <div className="hero-features">
-              <div><span className="round-icon">✦</span><p><b>Premium</b><small>Custom System</small></p></div>
-              <div><span className="round-icon">◎</span><p><b>Expertly</b><small>Engineered</small></p></div>
-              <div><span className="round-icon">♡</span><p><b>Built With</b><small>Care</small></p></div>
-            </div>
+            <div className="heroMeta"><span>AI AGENT</span><span>AUTOMATION</span><span>APPLICATION</span><span>INTEGRATION</span></div>
           </div>
 
-          <div className="hero-visual reveal" aria-label="Visual AI system">
-            <div className="hero-orb">
-              <div className="hero-orb-core" />
-              <div className="hero-orbit-ring ring-one"><i /></div>
-              <div className="hero-orbit-ring ring-two"><i /></div>
-            </div>
-            <div className="floating-panel panel-a">
-              <small>AI Agent</small>
-              <strong>Operational</strong>
-              <span>● Live</span>
-            </div>
-            <div className="floating-panel panel-b">
-              <small>Automation</small>
-              <strong>24 / 7</strong>
-              <span>Running</span>
-            </div>
-            <div className="hero-dashboard">
-              <div className="dash-top"><span>AIORBITLAB SYSTEM</span><b>LIVE</b></div>
-              <div className="dash-grid">
-                <div><small>Tasks</small><strong>1,248</strong></div>
-                <div><small>Success</small><strong>98.7%</strong></div>
-              </div>
-              <div className="dash-line"><i /><i /><i /><i /><i /><i /><i /></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="about" className="about-section section-space">
-        <div className="page-width about-grid">
-          <div className="about-image reveal">
-            <div className="about-image-glow" />
-            <div className="device-frame">
-              <div className="device-top"><i /><i /><i /></div>
-              <div className="device-screen">
-                <div className="screen-label">AI OPERATIONS</div>
-                <div className="screen-stat"><span>Realtime activity</span><b>+42%</b></div>
-                <div className="screen-bars"><i /><i /><i /><i /><i /><i /></div>
-                <div className="screen-rows"><p /><p /><p /></div>
+          <div className="heroVisual reveal show">
+            <div className="visualMain">
+              <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1500&q=90" alt="AI analytics dashboard" />
+              <div className="visualShade" />
+              <div className="screenUI">
+                <div className="uiTop"><span>AIORBITLAB / COMMAND CENTER</span><b>● LIVE</b></div>
+                <h3>Operations Intelligence</h3>
+                <p>Agents · automations · integrations · reporting</p>
+                <div className="uiChart"><i /><i /><i /><i /><i /><i /><i /><i /></div>
+                <div className="uiStats"><div><small>Agents</small><strong>12</strong></div><div><small>Flows</small><strong>28</strong></div><div><small>Success</small><strong>98%</strong></div></div>
               </div>
             </div>
+            <div className="floatCard fc1"><small>AI AGENT</small><b>05 Active</b><span>Automate · Decide · Act</span></div>
+            <div className="floatCard fc2"><small>WORKFLOW</small><b>Running 24/7</b><span>Connected systems</span></div>
+            <div className="floatCard fc3"><small>IMPACT</small><b>+230%</b><span>Operational visibility</span></div>
           </div>
+        </div>
+        <div className="scrollLine">SCROLL TO EXPLORE</div>
+      </section>
 
-          <div className="about-copy reveal">
-            <p className="script-label">About Us</p>
-            <h2>More Than Just <span>an AI System</span></h2>
-            <p>
-              AIORBITLAB membangun sistem yang menggabungkan desain, software, data, dan AI menjadi workflow yang bisa benar-benar digunakan tim Anda setiap hari.
-            </p>
-            <div className="check-list">
-              <span>✦ Business-first architecture</span>
-              <span>✦ Modern UI & responsive experience</span>
-              <span>✦ AI automation & integrations</span>
-              <span>✦ Production-ready development</span>
-            </div>
-            <a className="primary-brown compact" href="#process">Learn More <span>→</span></a>
+      <section className="ticker"><div>AI AGENT · AUTOMATION · WEB APP · DASHBOARD · OCR · DATABASE · TELEGRAM · WHATSAPP · API · AI AGENT · AUTOMATION · WEB APP · DASHBOARD · OCR · DATABASE · TELEGRAM · WHATSAPP · API · </div></section>
+
+      <section id="studio" className="page manifesto reveal">
+        <p className="miniLabel">/ THE STUDIO</p>
+        <div>
+          <h2>Not another AI demo.<br />We build <em>working systems.</em></h2>
+          <p>Desain yang bagus memang penting. Tapi setelah tampilannya selesai, sistem harus tetap berguna: menerima data, memprosesnya, menyimpan hasil, memberi insight, lalu membantu tim mengambil tindakan.</p>
+        </div>
+      </section>
+
+      <section className="page mosaic">
+        <article className="tile tall reveal"><img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1500&q=88" alt="Artificial intelligence" /><div><small>01 / INTELLIGENCE</small><h3>AI that understands the work.</h3><p>Agent dengan konteks, tools, dan workflow yang jelas.</p></div></article>
+        <article className="tile reveal"><img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=88" alt="Application development" /><div><small>02 / APPLICATION</small><h3>Built around your workflow.</h3></div></article>
+        <article className="tile reveal"><img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=88" alt="Automation technology" /><div><small>03 / AUTOMATION</small><h3>Connect repetitive work.</h3></div></article>
+        <article className="tile wide reveal"><img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1600&q=88" alt="Business team" /><div><small>04 / HUMAN + AI</small><h3>Technology should make teams easier to run.</h3><p>Less friction. Better visibility. Faster action.</p></div></article>
+      </section>
+
+      <section id="services" className="servicesSection">
+        <div className="page">
+          <div className="sectionHead reveal">
+            <div><p className="miniLabel dark">/ CAPABILITIES</p><h2>Everything needed to build <em>smarter operations.</em></h2></div>
+            <p>Mulai dari satu AI Agent sampai sistem bisnis lengkap yang menghubungkan dashboard, database, bot, dokumen, dan API.</p>
+          </div>
+          <div className="serviceList">
+            {services.map(([num, title, text]) => <article className="serviceRow reveal" key={num}><span>{num}</span><h3>{title}</h3><p>{text}</p><a href="#contact">↗</a></article>)}
           </div>
         </div>
       </section>
 
-      <section id="services" className="services-section section-space">
-        <div className="page-width">
-          <div className="section-heading reveal">
-            <p className="script-label">Our Signature</p>
-            <h2>Popular Solutions</h2>
-          </div>
-
-          <div className="service-grid">
-            {services.map((item, index) => (
-              <article className="service-card reveal" key={item.title}>
-                <div className="service-art">
-                  <span className="service-number">0{index + 1}</span>
-                  <div className="service-symbol">{item.icon}</div>
-                  <div className="service-ring" />
-                </div>
-                <div className="service-body">
-                  <h3>{item.title}</h3>
-                  <p>{item.text}</p>
-                  <small>{item.meta}</small>
-                  <button className="circle-action" aria-label={`Lihat ${item.title}`}>↗</button>
-                </div>
-              </article>
-            ))}
-          </div>
-
-          <div className="center-button reveal">
-            <a href="#contact" className="outline-button">View All Services <span>→</span></a>
+      <section className="caseSection">
+        <div className="page caseCard reveal">
+          <div className="caseImage"><img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1600&q=88" alt="Business workflow" /></div>
+          <div className="caseCopy">
+            <p className="miniLabel">/ DESIGNED FOR REAL TEAMS</p>
+            <h2>One system.<br /><em>Less friction.</em></h2>
+            <p>Antarmuka dibuat sederhana. Di belakangnya, sistem bisa menghubungkan AI, database, Telegram, WhatsApp, laporan, dokumen, dan workflow lain yang dibutuhkan.</p>
+            <div className="tags"><span>AI Agent</span><span>Responsive Web</span><span>Automation</span><span>Database</span><span>API</span></div>
           </div>
         </div>
       </section>
 
-      <section id="process" className="benefits-section">
-        <div className="page-width benefit-strip reveal">
-          {advantages.map(([num, title, text]) => (
-            <div className="benefit-item" key={title}>
-              <span className="benefit-icon">{num}</span>
-              <div><strong>{title}</strong><small>{text}</small></div>
-            </div>
-          ))}
+      <section id="work" className="page workSection">
+        <div className="workHead reveal"><div><p className="miniLabel">/ SELECTED SYSTEMS</p><h2>Portfolio</h2></div><div className="filters">{filters.map(item => <button className={filter === item ? "active" : ""} onClick={() => setFilter(item)} key={item}>{item}</button>)}</div></div>
+        <div className="projectGrid">
+          {visibleProjects.map((project, index) => <article className={`project reveal ${index % 3 === 0 ? "large" : ""}`} key={project.title}><img src={project.image} alt={project.title} /><div className="projectShade" /><div className="projectInfo"><small>{project.type.toUpperCase()}</small><h3>{project.title}</h3><p>{project.text}</p><a href="#contact">Discuss Similar Project ↗</a></div></article>)}
         </div>
       </section>
 
-      <section className="story-section section-space">
-        <div className="page-width story-grid">
-          <div className="story-copy reveal">
-            <p className="script-label">How We Work</p>
-            <h2>From Idea to <span>Working System</span></h2>
-            <p>Kami mulai dari masalah bisnis, bukan dari teknologi. Setelah alur dipahami, baru kami pilih desain, database, AI, dan automation yang paling tepat.</p>
-          </div>
-          <div className="story-steps reveal">
-            {[
-              ["01", "Discover", "Petakan kebutuhan dan workflow."],
-              ["02", "Design", "Rancang UI, data, dan arsitektur."],
-              ["03", "Build", "Kembangkan sistem modern."],
-              ["04", "Launch", "Deploy, uji, dan tingkatkan."],
-            ].map(([n, title, text]) => (
-              <div key={n}><span>{n}</span><p><b>{title}</b><small>{text}</small></p></div>
-            ))}
-          </div>
+      <section className="page metrics reveal">
+        <div><strong>AI</strong><span>built into the workflow</span></div><div><strong>24/7</strong><span>automation-ready systems</span></div><div><strong>1</strong><span>connected source of truth</span></div><div><strong>∞</strong><span>room to keep scaling</span></div>
+      </section>
+
+      <section id="process" className="page processSection">
+        <div className="sectionHead darkHead reveal"><div><p className="miniLabel">/ PROCESS</p><h2>From idea to <em>production.</em></h2></div><p>Setiap tahap dibuat jelas supaya keputusan UI, database, integrasi, dan AI tidak berantakan saat sistem berkembang.</p></div>
+        <div className="steps">
+          {[["01", "Discover", "Petakan masalah, proses, data, dan target yang paling penting."], ["02", "Design", "Susun pengalaman pengguna, struktur data, integrasi, dan alur AI."], ["03", "Build", "Kembangkan sistem responsif dengan struktur yang mudah ditingkatkan."], ["04", "Launch", "Deploy, uji alur utama, ukur hasil, lalu iterasi berdasarkan kebutuhan."]].map(([num, title, text]) => <article className="step reveal" key={num}><span>{num}</span><div><h3>{title}</h3><p>{text}</p></div></article>)}
         </div>
       </section>
 
-      <section id="contact" className="contact-section section-space">
-        <div className="page-width contact-card reveal">
-          <div>
-            <p className="script-label">Start Your Project</p>
-            <h2>Build Something <span>Smarter.</span></h2>
-            <p>Ceritakan workflow yang ingin dibuat lebih cepat. Kami bantu ubah menjadi sistem yang rapi dan siap dipakai.</p>
-          </div>
-          <a href="mailto:hello@aiorbitlab.com" className="primary-brown">Start a Conversation <span>→</span></a>
+      <section id="contact" className="page contactSection">
+        <div className="contactCard reveal">
+          <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=2200&q=92" alt="Digital network" />
+          <div className="contactShade" />
+          <div className="contactContent"><p className="miniLabel">/ START BUILDING</p><h2>Turn your workflow into a <em>smart system.</em></h2><p>Ceritakan bagian bisnis yang masih manual, lambat, atau sulit dipantau. Dari situ kita bisa merancang sistem yang benar-benar berguna.</p><a className="button light" href="mailto:hello@aiorbitlab.com">Start a Project ↗</a></div>
         </div>
       </section>
 
-      <footer className="site-footer">
-        <div className="page-width footer-grid">
-          <div className="footer-brand">
-            <a href="#top" className="brand"><BrandMark /><span>AIORBITLAB</span></a>
-            <p>AI Agent, custom application, automation, dan data intelligence untuk bisnis modern.</p>
-            <div className="social-row"><span>in</span><span>ig</span><span>gh</span><span>✦</span></div>
-          </div>
-          <div><h4>Quick Links</h4><a href="#top">Home</a><a href="#services">Services</a><a href="#about">About Us</a><a href="#process">Process</a></div>
-          <div><h4>Solutions</h4><a href="#services">AI Agent</a><a href="#services">Custom App</a><a href="#services">Automation</a><a href="#services">AI Integration</a></div>
-          <div><h4>Contact Us</h4><p>hello@aiorbitlab.com</p><p>Indonesia</p><p>Build smarter. Move faster.</p></div>
+      <footer className="footer">
+        <div className="page footerGrid">
+          <div><a className="brand" href="#top"><BrandMark /><span>AIORBITLAB</span></a><p>AI Agent, aplikasi custom, automation, dashboard, OCR, dan integration untuk bisnis modern.</p></div>
+          <div><h4>Explore</h4><a href="#studio">Studio</a><a href="#services">Services</a><a href="#work">Portfolio</a><a href="#process">Process</a></div>
+          <div><h4>Solutions</h4><a href="#services">AI Agent</a><a href="#services">Automation</a><a href="#services">Dashboard</a><a href="#services">OCR</a></div>
+          <div><h4>Contact</h4><a href="mailto:hello@aiorbitlab.com">hello@aiorbitlab.com</a><p>Indonesia</p></div>
         </div>
-        <div className="page-width footer-bottom"><span>© 2026 AIORBITLAB</span><span>Next.js · React · TypeScript · Tailwind CSS</span></div>
+        <div className="page footerBottom"><span>© 2026 AIORBITLAB</span><span>Ideas × AI × Real Impact</span></div>
       </footer>
     </main>
   );
